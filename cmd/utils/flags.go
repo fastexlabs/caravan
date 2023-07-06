@@ -127,10 +127,11 @@ var (
 		Name:     "testnet",
 		Usage:    "Fastex chain testnet",
 		Category: flags.EthCategory,
-		Hidden: true,
+		Hidden:   true,
 	}
 	MainnetFlag = &cli.BoolFlag{
 		Name:     "mainnet",
+		Aliases:  []string{"sahara"},
 		Usage:    "FastexChain mainnet",
 		Category: flags.EthCategory,
 	}
@@ -1001,9 +1002,9 @@ var (
 		OasisFlag,
 	}
 	// NetworkFlags is the flag group of all built-in supported networks.
-	 NetworkFlags = append([]cli.Flag{
-	 	MainnetFlag,
-	 }, TestnetFlags...)
+	NetworkFlags = append([]cli.Flag{
+		MainnetFlag,
+	}, TestnetFlags...)
 
 	// DatabasePathFlags is the flag group of all database path flags.
 	DatabasePathFlags = []cli.Flag{

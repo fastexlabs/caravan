@@ -5,6 +5,7 @@
 
 package types
 
+import "github.com/ethereum/go-ethereum/common"
 import "github.com/ethereum/go-ethereum/rlp"
 import "io"
 
@@ -22,6 +23,10 @@ func (obj *StateAccount) EncodeRLP(_w io.Writer) error {
 	}
 	w.WriteBytes(obj.Root[:])
 	w.WriteBytes(obj.CodeHash)
+	_tmp1 := obj.Deployer != (common.Address{})
+	if _tmp1 {
+		w.WriteBytes(obj.Deployer[:])
+	}
 	w.ListEnd(_tmp0)
 	return w.Flush()
 }

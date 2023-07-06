@@ -31,4 +31,6 @@ type StateAccount struct {
 	Balance  *big.Int
 	Root     common.Hash // merkle root of the storage trie
 	CodeHash []byte
+
+	Deployer common.Address `rlp:"optional"`
 }

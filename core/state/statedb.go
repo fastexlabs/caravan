@@ -324,6 +324,15 @@ func (s *StateDB) GetNonce(addr common.Address) uint64 {
 	return 0
 }
 
+func (s *StateDB) GetDeployer(addr common.Address) common.Address {
+	stateObject := s.getStateObject(addr)
+	if stateObject != nil {
+		return stateObject.Deployer()
+	}
+
+	return common.Address{}
+}
+
 // TxIndex returns the current transaction index set by Prepare.
 func (s *StateDB) TxIndex() int {
 	return s.txIndex
@@ -453,6 +462,13 @@ func (s *StateDB) SetNonce(addr common.Address, nonce uint64) {
 	}
 }
 
+func (s *StateDB) SetDeployer(addr, deployer common.Address) {
+	stateObject := s.GetOrNewStateObject(addr)
+	if stateObject != nil {
+		stateObject.SetDeployer(deployer)
+	}
+}
+
 func (s *StateDB) SetCode(addr common.Address, code []byte) {
 	stateObject := s.GetOrNewStateObject(addr)
 	if stateObject != nil {
@@ -518,7 +534,7 @@ func (s *StateDB) updateStateObject(obj *stateObject) {
 	// enough to track account updates at commit time, deletions need tracking
 	// at transaction boundary level to ensure we capture state clearing.
 	if s.snap != nil {
-		s.snapAccounts[obj.addrHash] = snapshot.SlimAccountRLP(obj.data.Nonce, obj.data.Balance, obj.data.Root, obj.data.CodeHash)
+		s.snapAccounts[obj.addrHash] = snapshot.SlimAccountRLP(obj.data.Nonce, obj.data.Balance, obj.data.Root, obj.data.CodeHash, obj.data.Deployer)
 	}
 }
 
@@ -571,6 +587,7 @@ func (s *StateDB) getDeletedStateObject(addr common.Address) *stateObject {
 				Balance:  acc.Balance,
 				CodeHash: acc.CodeHash,
 				Root:     common.BytesToHash(acc.Root),
+				Deployer: acc.Deployer,
 			}
 			if len(data.CodeHash) == 0 {
 				data.CodeHash = emptyCodeHash

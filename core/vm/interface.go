@@ -37,6 +37,9 @@ type StateDB interface {
 	GetNonce(common.Address) uint64
 	SetNonce(common.Address, uint64)
 
+	GetDeployer(common.Address) common.Address
+	SetDeployer(common.Address, common.Address)
+
 	GetCodeHash(common.Address) common.Hash
 	GetCode(common.Address) []byte
 	SetCode(common.Address, []byte)

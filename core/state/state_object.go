@@ -515,6 +515,21 @@ func (s *stateObject) setNonce(nonce uint64) {
 	s.data.Nonce = nonce
 }
 
+func (s *stateObject) SetDeployer(deployer common.Address) {
+	if s.data.Deployer != (common.Address{}) {
+		return
+	}
+	s.db.journal.append(deployerChange{
+		account: &s.address,
+		prev:    &s.data.Deployer,
+	})
+	s.setDeployer(deployer)
+}
+
+func (s *stateObject) setDeployer(deployer common.Address) {
+	s.data.Deployer = deployer
+}
+
 func (s *stateObject) CodeHash() []byte {
 	return s.data.CodeHash
 }
@@ -525,6 +540,10 @@ func (s *stateObject) Balance() *big.Int {
 
 func (s *stateObject) Nonce() uint64 {
 	return s.data.Nonce
+}
+
+func (s *stateObject) Deployer() common.Address {
+	return s.data.Deployer
 }
 
 // Never called, but must be present to allow stateObject to be used

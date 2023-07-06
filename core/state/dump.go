@@ -54,6 +54,7 @@ type DumpAccount struct {
 	Root      hexutil.Bytes          `json:"root"`
 	CodeHash  hexutil.Bytes          `json:"codeHash"`
 	Code      hexutil.Bytes          `json:"code,omitempty"`
+	Deployer  hexutil.Bytes          `json:"deployer,omitempty"`
 	Storage   map[common.Hash]string `json:"storage,omitempty"`
 	Address   *common.Address        `json:"address,omitempty"` // Address only present in iterative (line-by-line) mode
 	SecureKey hexutil.Bytes          `json:"key,omitempty"`     // If we don't have address, we can output the key
@@ -105,6 +106,7 @@ func (d iterativeDump) OnAccount(addr common.Address, account DumpAccount) {
 		Root:      account.Root,
 		CodeHash:  account.CodeHash,
 		Code:      account.Code,
+		Deployer:  account.Deployer,
 		Storage:   account.Storage,
 		SecureKey: account.SecureKey,
 		Address:   nil,
@@ -149,6 +151,7 @@ func (s *StateDB) DumpToCollector(c DumpCollector, conf *DumpConfig) (nextKey []
 			Nonce:     data.Nonce,
 			Root:      data.Root[:],
 			CodeHash:  data.CodeHash,
+			Deployer:  data.Deployer[:],
 			SecureKey: it.Key,
 		}
 		addrBytes := s.trie.GetKey(it.Key)

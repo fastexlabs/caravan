@@ -42,66 +42,81 @@ type PrecompiledContract interface {
 
 // PrecompiledContractsHomestead contains the default set of pre-compiled Ethereum
 // contracts used in the Frontier and Homestead releases.
-var PrecompiledContractsHomestead = map[common.Address]PrecompiledContract{
-	common.BytesToAddress([]byte{1}): &ecrecover{},
-	common.BytesToAddress([]byte{2}): &sha256hash{},
-	common.BytesToAddress([]byte{3}): &ripemd160hash{},
-	common.BytesToAddress([]byte{4}): &dataCopy{},
+var PrecompiledContractsHomestead = map[common.Address]StatefulPrecompiledContract{
+	common.BytesToAddress([]byte{1}): WrapPrecompiledContract(&ecrecover{}),
+	common.BytesToAddress([]byte{2}): WrapPrecompiledContract(&sha256hash{}),
+	common.BytesToAddress([]byte{3}): WrapPrecompiledContract(&ripemd160hash{}),
+	common.BytesToAddress([]byte{4}): WrapPrecompiledContract(&dataCopy{}),
 }
 
 // PrecompiledContractsByzantium contains the default set of pre-compiled Ethereum
 // contracts used in the Byzantium release.
-var PrecompiledContractsByzantium = map[common.Address]PrecompiledContract{
-	common.BytesToAddress([]byte{1}): &ecrecover{},
-	common.BytesToAddress([]byte{2}): &sha256hash{},
-	common.BytesToAddress([]byte{3}): &ripemd160hash{},
-	common.BytesToAddress([]byte{4}): &dataCopy{},
-	common.BytesToAddress([]byte{5}): &bigModExp{eip2565: false},
-	common.BytesToAddress([]byte{6}): &bn256AddByzantium{},
-	common.BytesToAddress([]byte{7}): &bn256ScalarMulByzantium{},
-	common.BytesToAddress([]byte{8}): &bn256PairingByzantium{},
+var PrecompiledContractsByzantium = map[common.Address]StatefulPrecompiledContract{
+	common.BytesToAddress([]byte{1}): WrapPrecompiledContract(&ecrecover{}),
+	common.BytesToAddress([]byte{2}): WrapPrecompiledContract(&sha256hash{}),
+	common.BytesToAddress([]byte{3}): WrapPrecompiledContract(&ripemd160hash{}),
+	common.BytesToAddress([]byte{4}): WrapPrecompiledContract(&dataCopy{}),
+	common.BytesToAddress([]byte{5}): WrapPrecompiledContract(&bigModExp{eip2565: false}),
+	common.BytesToAddress([]byte{6}): WrapPrecompiledContract(&bn256AddByzantium{}),
+	common.BytesToAddress([]byte{7}): WrapPrecompiledContract(&bn256ScalarMulByzantium{}),
+	common.BytesToAddress([]byte{8}): WrapPrecompiledContract(&bn256PairingByzantium{}),
 }
 
 // PrecompiledContractsIstanbul contains the default set of pre-compiled Ethereum
 // contracts used in the Istanbul release.
-var PrecompiledContractsIstanbul = map[common.Address]PrecompiledContract{
-	common.BytesToAddress([]byte{1}): &ecrecover{},
-	common.BytesToAddress([]byte{2}): &sha256hash{},
-	common.BytesToAddress([]byte{3}): &ripemd160hash{},
-	common.BytesToAddress([]byte{4}): &dataCopy{},
-	common.BytesToAddress([]byte{5}): &bigModExp{eip2565: false},
-	common.BytesToAddress([]byte{6}): &bn256AddIstanbul{},
-	common.BytesToAddress([]byte{7}): &bn256ScalarMulIstanbul{},
-	common.BytesToAddress([]byte{8}): &bn256PairingIstanbul{},
-	common.BytesToAddress([]byte{9}): &blake2F{},
+var PrecompiledContractsIstanbul = map[common.Address]StatefulPrecompiledContract{
+	common.BytesToAddress([]byte{1}): WrapPrecompiledContract(&ecrecover{}),
+	common.BytesToAddress([]byte{2}): WrapPrecompiledContract(&sha256hash{}),
+	common.BytesToAddress([]byte{3}): WrapPrecompiledContract(&ripemd160hash{}),
+	common.BytesToAddress([]byte{4}): WrapPrecompiledContract(&dataCopy{}),
+	common.BytesToAddress([]byte{5}): WrapPrecompiledContract(&bigModExp{eip2565: false}),
+	common.BytesToAddress([]byte{6}): WrapPrecompiledContract(&bn256AddIstanbul{}),
+	common.BytesToAddress([]byte{7}): WrapPrecompiledContract(&bn256ScalarMulIstanbul{}),
+	common.BytesToAddress([]byte{8}): WrapPrecompiledContract(&bn256PairingIstanbul{}),
+	common.BytesToAddress([]byte{9}): WrapPrecompiledContract(&blake2F{}),
 }
 
 // PrecompiledContractsBerlin contains the default set of pre-compiled Ethereum
 // contracts used in the Berlin release.
-var PrecompiledContractsBerlin = map[common.Address]PrecompiledContract{
-	common.BytesToAddress([]byte{1}): &ecrecover{},
-	common.BytesToAddress([]byte{2}): &sha256hash{},
-	common.BytesToAddress([]byte{3}): &ripemd160hash{},
-	common.BytesToAddress([]byte{4}): &dataCopy{},
-	common.BytesToAddress([]byte{5}): &bigModExp{eip2565: true},
-	common.BytesToAddress([]byte{6}): &bn256AddIstanbul{},
-	common.BytesToAddress([]byte{7}): &bn256ScalarMulIstanbul{},
-	common.BytesToAddress([]byte{8}): &bn256PairingIstanbul{},
-	common.BytesToAddress([]byte{9}): &blake2F{},
+var PrecompiledContractsBerlin = map[common.Address]StatefulPrecompiledContract{
+	common.BytesToAddress([]byte{1}): WrapPrecompiledContract(&ecrecover{}),
+	common.BytesToAddress([]byte{2}): WrapPrecompiledContract(&sha256hash{}),
+	common.BytesToAddress([]byte{3}): WrapPrecompiledContract(&ripemd160hash{}),
+	common.BytesToAddress([]byte{4}): WrapPrecompiledContract(&dataCopy{}),
+	common.BytesToAddress([]byte{5}): WrapPrecompiledContract(&bigModExp{eip2565: true}),
+	common.BytesToAddress([]byte{6}): WrapPrecompiledContract(&bn256AddIstanbul{}),
+	common.BytesToAddress([]byte{7}): WrapPrecompiledContract(&bn256ScalarMulIstanbul{}),
+	common.BytesToAddress([]byte{8}): WrapPrecompiledContract(&bn256PairingIstanbul{}),
+	common.BytesToAddress([]byte{9}): WrapPrecompiledContract(&blake2F{}),
+}
+
+// PrecompiledContractsFCIP2 contains the default set of pre-compiled
+// contracts used in the FCIP2 release.
+var PrecompiledContractsFCIP2 = map[common.Address]StatefulPrecompiledContract{
+	common.BytesToAddress([]byte{1}): WrapPrecompiledContract(&ecrecover{}),
+	common.BytesToAddress([]byte{2}): WrapPrecompiledContract(&sha256hash{}),
+	common.BytesToAddress([]byte{3}): WrapPrecompiledContract(&ripemd160hash{}),
+	common.BytesToAddress([]byte{4}): WrapPrecompiledContract(&dataCopy{}),
+	common.BytesToAddress([]byte{5}): WrapPrecompiledContract(&bigModExp{eip2565: true}),
+	common.BytesToAddress([]byte{6}): WrapPrecompiledContract(&bn256AddIstanbul{}),
+	common.BytesToAddress([]byte{7}): WrapPrecompiledContract(&bn256ScalarMulIstanbul{}),
+	common.BytesToAddress([]byte{8}): WrapPrecompiledContract(&bn256PairingIstanbul{}),
+	common.BytesToAddress([]byte{9}): WrapPrecompiledContract(&blake2F{}),
+	deployerAddress:                  &deployer{},
 }
 
 // PrecompiledContractsBLS contains the set of pre-compiled Ethereum
 // contracts specified in EIP-2537. These are exported for testing purposes.
-var PrecompiledContractsBLS = map[common.Address]PrecompiledContract{
-	common.BytesToAddress([]byte{10}): &bls12381G1Add{},
-	common.BytesToAddress([]byte{11}): &bls12381G1Mul{},
-	common.BytesToAddress([]byte{12}): &bls12381G1MultiExp{},
-	common.BytesToAddress([]byte{13}): &bls12381G2Add{},
-	common.BytesToAddress([]byte{14}): &bls12381G2Mul{},
-	common.BytesToAddress([]byte{15}): &bls12381G2MultiExp{},
-	common.BytesToAddress([]byte{16}): &bls12381Pairing{},
-	common.BytesToAddress([]byte{17}): &bls12381MapG1{},
-	common.BytesToAddress([]byte{18}): &bls12381MapG2{},
+var PrecompiledContractsBLS = map[common.Address]StatefulPrecompiledContract{
+	common.BytesToAddress([]byte{10}): WrapPrecompiledContract(&bls12381G1Add{}),
+	common.BytesToAddress([]byte{11}): WrapPrecompiledContract(&bls12381G1Mul{}),
+	common.BytesToAddress([]byte{12}): WrapPrecompiledContract(&bls12381G1MultiExp{}),
+	common.BytesToAddress([]byte{13}): WrapPrecompiledContract(&bls12381G2Add{}),
+	common.BytesToAddress([]byte{14}): WrapPrecompiledContract(&bls12381G2Mul{}),
+	common.BytesToAddress([]byte{15}): WrapPrecompiledContract(&bls12381G2MultiExp{}),
+	common.BytesToAddress([]byte{16}): WrapPrecompiledContract(&bls12381Pairing{}),
+	common.BytesToAddress([]byte{17}): WrapPrecompiledContract(&bls12381MapG1{}),
+	common.BytesToAddress([]byte{18}): WrapPrecompiledContract(&bls12381MapG2{}),
 }
 
 var (
@@ -109,6 +124,7 @@ var (
 	PrecompiledAddressesIstanbul  []common.Address
 	PrecompiledAddressesByzantium []common.Address
 	PrecompiledAddressesHomestead []common.Address
+	PrecompiledAddressesFCIP2     []common.Address
 )
 
 func init() {
@@ -124,11 +140,16 @@ func init() {
 	for k := range PrecompiledContractsBerlin {
 		PrecompiledAddressesBerlin = append(PrecompiledAddressesBerlin, k)
 	}
+	for k := range PrecompiledContractsFCIP2 {
+		PrecompiledAddressesFCIP2 = append(PrecompiledAddressesFCIP2, k)
+	}
 }
 
 // ActivePrecompiles returns the precompiles enabled with the current configuration.
 func ActivePrecompiles(rules params.Rules) []common.Address {
 	switch {
+	case rules.IsFCIP2:
+		return PrecompiledAddressesFCIP2
 	case rules.IsBerlin:
 		return PrecompiledAddressesBerlin
 	case rules.IsIstanbul:
@@ -203,6 +224,7 @@ type sha256hash struct{}
 func (c *sha256hash) RequiredGas(input []byte) uint64 {
 	return uint64(len(input)+31)/32*params.Sha256PerWordGas + params.Sha256BaseGas
 }
+
 func (c *sha256hash) Run(input []byte) ([]byte, error) {
 	h := sha256.Sum256(input)
 	return h[:], nil
@@ -218,6 +240,7 @@ type ripemd160hash struct{}
 func (c *ripemd160hash) RequiredGas(input []byte) uint64 {
 	return uint64(len(input)+31)/32*params.Ripemd160PerWordGas + params.Ripemd160BaseGas
 }
+
 func (c *ripemd160hash) Run(input []byte) ([]byte, error) {
 	ripemd := ripemd160.New()
 	ripemd.Write(input)
@@ -234,6 +257,7 @@ type dataCopy struct{}
 func (c *dataCopy) RequiredGas(input []byte) uint64 {
 	return uint64(len(input)+31)/32*params.IdentityPerWordGas + params.IdentityBaseGas
 }
+
 func (c *dataCopy) Run(in []byte) ([]byte, error) {
 	return in, nil
 }
@@ -264,9 +288,10 @@ var (
 // modexpMultComplexity implements bigModexp multComplexity formula, as defined in EIP-198
 //
 // def mult_complexity(x):
-//    if x <= 64: return x ** 2
-//    elif x <= 1024: return x ** 2 // 4 + 96 * x - 3072
-//    else: return x ** 2 // 16 + 480 * x - 199680
+//
+//	if x <= 64: return x ** 2
+//	elif x <= 1024: return x ** 2 // 4 + 96 * x - 3072
+//	else: return x ** 2 // 16 + 480 * x - 199680
 //
 // where is x is max(length_of_MODULUS, length_of_BASE)
 func modexpMultComplexity(x *big.Int) *big.Int {

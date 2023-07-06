@@ -580,6 +580,7 @@ func generateAccounts(ctx *generatorContext, dl *diskLayer, accMarker []byte) er
 			Balance  *big.Int
 			Root     common.Hash
 			CodeHash []byte
+			Deployer common.Address `rlp:"optional"`
 		}
 		if err := rlp.DecodeBytes(val, &acc); err != nil {
 			log.Crit("Invalid account encountered during snapshot creation", "err", err)
@@ -594,9 +595,12 @@ func generateAccounts(ctx *generatorContext, dl *diskLayer, accMarker []byte) er
 				if acc.Root == emptyRoot {
 					dataLen -= 32
 				}
+				if acc.Deployer == (common.Address{}) {
+					dataLen -= 20
+				}
 				snapRecoveredAccountMeter.Mark(1)
 			} else {
-				data := SlimAccountRLP(acc.Nonce, acc.Balance, acc.Root, acc.CodeHash)
+				data := SlimAccountRLP(acc.Nonce, acc.Balance, acc.Root, acc.CodeHash, acc.Deployer)
 				dataLen = len(data)
 				rawdb.WriteAccountSnapshot(ctx.batch, account, data)
 				snapGeneratedAccountMeter.Mark(1)
